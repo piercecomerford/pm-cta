@@ -51,3 +51,5 @@ fname
 #+RESULTS:
 [[file:./img/s120vc-calibration-curve.svg]]
 
+
+[[./img/s120vc-calibration-curve.svg]]
