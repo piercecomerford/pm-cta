@@ -42,13 +42,12 @@ plt.plot(wavelength,power)
 plt.title("S120VC Calibration Curve")
 plt.xlabel("Nominal Wavelength [nm]")
 plt.ylabel(r"Power [$\mu$W]")
-fname = './img/s120vc-calibration-curve.pdf'
+fname = './img/s120vc-calibration-curve.svg
 plt.savefig(fname)
 fname
 
 #+END_SRC
 
 #+RESULTS:
-[[file:./img/s120vc-calibration-curve.pdf]]
+[[file:./img/s120vc-calibration-curve.svg]]
 
-[[./img/s120vc-calibration-curve.pdf]]
