@@ -1,0 +1,48 @@
+** Calibration
+
+/This document contains logged information about calibration for the Thorlabs PM101 power meter. This should be readable (and the code should be runnable) from any editor, but for best results, run in emacs with org-mode./
+
+Configuration parameters:
++ Wavelength: 570 nm (green)
++ Voltage: 3.599 V
++ Current: 10.7 mA
+
+| Nominal Wavelength  (nm) | Power (\mu W) |
+|--------------------------+-------------|
+|                      200 |       29.82 |
+|                      250 |       30.22 |
+|                      300 |       22.70 |
+|                      350 |       17.23 |
+|                      400 |       13.64 |
+|                      450 |       11.57 |
+|                      500 |       10.20 |
+|                      550 |        8.95 |
+|                      600 |        7.92 |
+|                      650 |        7.12 |
+|                      700 |        6.46 |
+|                      750 |        5.93 |
+|                      800 |       5.434 |
+|                      850 |       5.012 |
+|                      900 |       4.651 |
+|                      950 |       4.366 |
+
+#+BEGIN_SRC python :session :results file link
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+wavelength = np.array([200,210,220,230,240,250,300,350,400,450,500,550,600,650,700])
+power = np.array([29.82,29.80,29.81,29.29,29.01,30.22,22.7,17.23,13.64,11.57,10.20,8.95,7.92,7.12,6.46])
+
+plt.plot(wavelength,power)
+plt.title("S120VC Calibration Curve")
+plt.xlabel("Nominal Wavelength [nm]")
+plt.ylabel("Power [uW]")
+fname = './s120vc-calibration-curve.svg'
+plt.savefig(fname)
+fname
+
+#+END_SRC
+
+#+RESULTS:
+[[file:./s120vc-calibration-curve.svg]]

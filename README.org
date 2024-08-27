@@ -1,0 +1,3 @@
+#+TITLE:Purity Monitor - Component Testing and Analysis
+
+This repository contains any relevant information involved in testing components for the LoLX LXe purity monitor apparatus. Most of this is extracted from a log I kept in org-mode - if you have a recent version emacs installed it would be most useful to open this repository in emacs and treat it a bit like an iPython notebook. If not, consider each .org file as plaintext documentation with clearly demarcated snippets of code for analysis. 
