@@ -28,21 +28,25 @@ Configuration parameters:
 
 #+BEGIN_SRC python :session :results file link
 
+import os
 import numpy as np
 import matplotlib.pyplot as plt
 
 wavelength = np.array([200,210,220,230,240,250,300,350,400,450,500,550,600,650,700])
 power = np.array([29.82,29.80,29.81,29.29,29.01,30.22,22.7,17.23,13.64,11.57,10.20,8.95,7.92,7.12,6.46])
 
+if not os.path.exists('./img'):
+    os.makedirs('./img')
+
 plt.plot(wavelength,power)
 plt.title("S120VC Calibration Curve")
 plt.xlabel("Nominal Wavelength [nm]")
-plt.ylabel("Power [uW]")
-fname = './s120vc-calibration-curve.svg'
+plt.ylabel(r"Power [$\mu$W]")
+fname = './img/s120vc-calibration-curve.pdf'
 plt.savefig(fname)
 fname
 
 #+END_SRC
 
 #+RESULTS:
-[[file:./s120vc-calibration-curve.svg]]
+[[file:./img/s120vc-calibration-curve.pdf]]
