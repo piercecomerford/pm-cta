@@ -46,14 +46,14 @@ for dataset_folder in range(1, 7):
                 # Subtract the pedestal
                 voltages = [voltage - pedestal for voltage in voltages]
 
-                # Calculate pulse area (.56 conversion ratio --> charge)
+                # Calculate pulse area (.56 amplifier conversion ratio --> charge)
                 area = calculate_pulse_area(time_interval, voltages) / 0.56
 
                 # Append pulse area and time to lists
                 pulse_areas.append(area)
                 times.append(time_index)
 
-                # Increment the time index by 10 minutes
+                # Increment the time index by 10 minutes - that's the time between flash lamp pulses
                 time_index += 10 / 60  # Convert 10 minutes to hours
 
     # Append pulse areas and times for this dataset
@@ -67,6 +67,7 @@ for i in range(6):
 plt.xlabel("Time (hours)")
 plt.xlim(0,24)
 plt.grid()
+plt.ylabel("Charge (femtoCoulombs)")
 plt.legend()
 plt.savefig("./img/charge.svg")
 plt.show()
