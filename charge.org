@@ -1,0 +1,79 @@
+#+TITLE:Collecting charge information
+
+This analyses the pulse information collected by Leonid's Labview program (located somewhere on his atlas laptop...). This pulls from a folder called =data= which is too big to commit to github but which should nevertheless exist somewhere on vkdecay.
+
+#+BEGIN_SRC python 
+
+import os
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Function to calculate pulse area
+def calculate_pulse_area(time_interval, voltages):
+    area = np.trapz(voltages, dx=time_interval)
+    return area
+
+# Function to find the pedestal
+def find_pedestal(voltages, start_index, end_index):
+    return np.mean(voltages[start_index:end_index])
+
+# Initialize lists to store data for plotting
+dataset_pulse_areas = []
+dataset_times = []
+
+# Iterate through each dataset folder
+for dataset_folder in range(1, 7):
+    folder_path = f"../data/sfu{dataset_folder}"
+    pulse_areas = []
+    times = []
+    time_index = 0
+
+    # Get a list of file names in sorted order
+    file_names = sorted(os.listdir(folder_path), key=lambda x: int(x[1:-4]))
+
+    # Iterate through each txt file in the dataset folder
+    for file_name in file_names:
+        if file_name.endswith(".txt"):
+            file_path = os.path.join(folder_path, file_name)
+            with open(file_path, "r") as file:
+                lines = file.readlines()
+                time_interval = float(lines[0].strip()) * 1e9  # Convert to nanoseconds
+                voltages = [float(value) for value in lines[1:]]
+
+                # Find the pedestal
+                pedestal = find_pedestal(voltages, start_index=0, end_index=100)  # Adjust the range as needed
+
+                # Subtract the pedestal
+                voltages = [voltage - pedestal for voltage in voltages]
+
+                # Calculate pulse area (.56 conversion ratio --> charge)
+                area = calculate_pulse_area(time_interval, voltages) / 0.56
+
+                # Append pulse area and time to lists
+                pulse_areas.append(area)
+                times.append(time_index)
+
+                # Increment the time index by 10 minutes
+                time_index += 10 / 60  # Convert 10 minutes to hours
+
+    # Append pulse areas and times for this dataset
+    dataset_pulse_areas.append(pulse_areas)
+    dataset_times.append(times)
+
+# Plot pulse area vs time for each dataset
+for i in range(6):
+    plt.plot(dataset_times[i], dataset_pulse_areas[i], marker='o', linestyle='-', label=f"SFU {i+1}")
+
+plt.xlabel("Time (hours)")
+plt.xlim(0,24)
+plt.grid()
+plt.legend()
+plt.savefig("./img/charge.svg")
+plt.show()
+
+#+END_SRC
+
+#+RESULTS:
+: None
+
+[[./img/charge.svg]]
