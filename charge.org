@@ -1,6 +1,6 @@
 #+TITLE:Collecting charge information
 
-This analyses the pulse information collected by Leonid's Labview program (located somewhere on his atlas laptop...). This pulls from a folder called =data= which is too big to commit to github but which should nevertheless exist somewhere on vkdecay.
+This takes the anode pulses collected by Leonid's Labview program (located somewhere on his atlas laptop...), where various photocathodes are used to generate electrons. This pulls from a folder called =data= which is too big to commit to Github but which should nevertheless exist somewhere on vkdecay.
 
 #+BEGIN_SRC python 
 
