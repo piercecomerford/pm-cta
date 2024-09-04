@@ -1,0 +1,52 @@
+#+TITLE:Signal
+
+This program takes =txt=-formatted pulse information from the oscilloscope using Leonid's Labview script, averages them, and plots them.
+
+
+#+BEGIN_SRC python
+import os
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Function to read a single .txt file and return its contents as a numpy array
+def read_signal_file(file_path):
+    with open(file_path, 'r') as file:
+        data = file.readlines()
+    return np.array([float(line.strip()) for line in data])
+
+# Function to subtract the pedestal (baseline) from a signal
+def subtract_pedestal(signal, pedestal_section_length=10):
+    pedestal = np.mean(signal[:pedestal_section_length])
+    return signal - pedestal
+
+# Function to process a folder and compute the average signal with pedestal subtraction
+def process_folder(folder_path, pedestal_section_length=10):
+    signal_files = [os.path.join(folder_path, f) for f in os.listdir(folder_path) if f.endswith('.txt')]
+    signals = [subtract_pedestal(read_signal_file(file), pedestal_section_length) for file in signal_files]
+    average_signal = np.mean(signals, axis=0)
+    return average_signal
+
+# List of folder paths
+folders = ['B', 'C', 'D', 'E']
+
+# Dictionary to store average signals for each folder
+average_signals = {}
+
+# Loop over each folder and compute the average signal with pedestal subtraction
+for folder in folders:
+    average_signals[folder] = process_folder(folder)
+
+# Plot the average signals
+plt.figure(figsize=(10, 6))
+
+for folder, average_signal in average_signals.items():
+    plt.plot(average_signal, label=folder)
+
+plt.xlabel('Time [us]')
+plt.ylabel('Average Signal [arb. u.]')
+plt.title('193nm Filter')
+plt.grid()
+plt.legend()
+plt.savefig("193signal.png")
+plt.show()
+#+END_SRC
