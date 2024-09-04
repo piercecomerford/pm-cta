@@ -1,6 +1,6 @@
 #+TITLE:Signal
 
-This program takes =txt=-formatted pulse information from the oscilloscope using Leonid's Labview script, averages them, and plots them.
+This program takes =txt=-formatted pulse information from the oscilloscope using Leonid's Labview script, averages them, and plots them. Configured for relative paths B, C, D, E (corresponding to configurations outlined in report). 
 
 
 #+BEGIN_SRC python
